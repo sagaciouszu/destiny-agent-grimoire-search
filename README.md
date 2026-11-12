@@ -1,37 +1,21 @@
-# Destiny Agent Grimoire — Search Edition
+# Destiny Agent Grimoire — Search (archived)
 
-This repository is a fork of
+> **Archived.** Search now ships in the main site:
+> <https://sagaciouszu.github.io/destiny-agent-grimoire-site/search/>
+
+This repository was the Pagefind prototype. The integration was folded into
 [destiny-agent-grimoire-site](https://github.com/sagaciouszu/destiny-agent-grimoire-site)
-with full-text search added via [Pagefind](https://pagefind.app/).
+so the project keeps one deploy, one stats snapshot and no drift between a fork
+and its upstream.
 
-## What's different
+The `backup/pre-search` branch holds the pre-search baseline of the site.
 
-- `npm run build` runs Eleventy then Pagefind, producing a searchable `_site/`.
-- `/search/` page with the Pagefind UI.
-- Search link in the primary navigation.
-- Search covers site documentation (guides, install, troubleshooting, persona
-  pages, limits). It does **not** search the 125,324 lore lines in the Grimoire
-  database — that requires a local install (see the install guide).
+## What moved
 
-## Build
+- `npm run build` in the main site runs Eleventy then Pagefind.
+- `/search/` uses the Pagefind Component UI with `bundle-path` and `base-url`
+  set to the Pages subpath.
+- Search covers site documentation only. Lore search stays local in the
+  Grimoire CLI and MCP server.
 
-```bash
-npm install
-npm run build
-npx serve _site
-```
-
-## Search locally
-
-After building, open `_site/search/index.html` in a browser, or serve `_site/`
-and visit `/search/`.
-
-## Relationship to the main site
-
-This repo tracks the main site and adds search. To sync upstream changes:
-
-```bash
-git remote add upstream https://github.com/sagaciouszu/destiny-agent-grimoire-site.git
-git fetch upstream
-git merge upstream/main
-```
+Nothing here is maintained. Use the main site repository.
