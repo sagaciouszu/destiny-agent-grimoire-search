@@ -1,0 +1,153 @@
+---
+layout: default
+title: Destiny Agent Grimoire
+description: A searchable Destiny lore library and character personas that read from it.
+---
+
+<section class="hero">
+  <div class="hero-copy">
+    <h1>Destiny Agent Grimoire</h1>
+    <p class="lede">
+      The Grimoire is a searchable library of Destiny's books, dialogue and gear
+      lore. Six characters read from it, and every shipped quote is checked against
+      the library so you can look a line up before you use it. Everything stays
+      on your computer.
+    </p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="{{ '/grimoire/install/' | url }}">Get the Grimoire</a>
+      <a class="button" href="{{ '/personas/' | url }}">Meet the characters</a>
+    </div>
+
+    <nav class="setup-order setup-order--hero" aria-label="Recommended setup order">
+      <span class="setup-order-label">Setup order</span>
+      <ol>
+        <li><a href="{{ '/grimoire/install/' | url }}">1. Grimoire</a></li>
+        <li><a href="{{ '/grimoire/mcp/' | url }}">2. AI access <span class="setup-optional">optional</span></a></li>
+        <li><a href="{{ '/personas/install/' | url }}">3. Characters</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <aside class="transmission" id="tapes" data-rotator aria-label="Test exchanges from the character conversations">
+    <p class="transmission-label">Test tapes</p>
+    <div class="transmission-window">
+      {% for voice in voices %}
+      <div class="transmission-item{% if loop.first %} is-active{% endif %}" data-voice data-speaker="{{ voice.speaker | escape }}" data-topic="{{ voice.topic | escape }}">
+        <p class="transmission-prompt">{{ voice.prompt | escape }}</p>
+        <blockquote><p>{{ voice.text | escape }}</p></blockquote>
+        <p class="transmission-caption">{% if voice.url %}<a href="{{ voice.url | url }}">{{ voice.speaker | escape }}</a>{% else %}<span class="transmission-speaker">{{ voice.speaker | escape }}</span>{% endif %} <span class="transmission-topic">/ {{ voice.topic | escape }}</span>{% if voice.captured %} <span class="transmission-captured">/ captured {{ voice.captured }}</span>{% endif %}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="transmission-filters">
+      <label class="transmission-filter">Character
+        <select data-rotator-speaker>
+          <option value="">All characters</option>
+          {% for speaker in voices | uniqueSpeakers %}
+          <option value="{{ speaker | escape }}">{{ speaker | escape }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="transmission-filter">Topic
+        <select data-rotator-topic>
+          <option value="">All topics</option>
+          {% for topic in voices | popularTopics %}
+          <option value="{{ topic | escape }}">{{ topic | escape }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+    <div class="transmission-controls" data-rotator-controls hidden>
+      <button type="button" data-rotator-shuffle>Random</button>
+      <button type="button" data-rotator-prev aria-label="Previous test transcript"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button type="button" data-rotator-toggle>Pause</button>
+      <button type="button" data-rotator-next aria-label="Next test transcript"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+      <span class="transmission-count" data-rotator-count aria-hidden="true">1 / {{ voices.length }}</span>
+    </div>
+    <p class="transmission-note">{{ voices.length }} exchanges across {{ voices | uniqueSpeakers | length }} characters. Random picks from this set, not quotes from the games.</p>
+  </aside>
+</section>
+
+<section class="categories" aria-label="Explore the project">
+  <article class="category">
+    <span class="category-index" aria-hidden="true">01</span>
+    <div>
+      <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" data-icon-placeholder="true">
+        <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/>
+        <path d="M4 5.5v16"/>
+      </svg>
+      <h2>The Grimoire</h2>
+      <p>
+        One searchable library with {{ grimoire.counts.books | commas }} books,
+        {{ grimoire.counts.transcripts | commas }} transcripts,
+        {{ grimoire.counts.grimoire_cards | commas }} grimoire cards and
+        {{ grimoire.counts.items | commas }} items. Search it yourself, or let an AI
+        search it for you.
+      </p>
+      <div class="category-links">
+        <a href="{{ '/grimoire/' | url }}">See what's inside</a>
+        <a href="{{ '/grimoire/install/' | url }}">Install it</a>
+        <a href="{{ '/grimoire/mcp/' | url }}">Connect an AI</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="category">
+    <span class="category-index" aria-hidden="true">02</span>
+    <div>
+      <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" data-icon-placeholder="true">
+        <circle cx="12" cy="8" r="3.5"/>
+        <path d="M5 20a7 7 0 0 1 14 0"/>
+      </svg>
+      <h2>The characters</h2>
+      <p>
+        The Drifter, Eris Morn, Zavala, Calus, Ghost and Mara Sov each have their own
+        voice, memory and rules. They share the library and can quietly ask each
+        other for help, without sharing private notes.
+      </p>
+      <div class="category-links">
+        <a href="{{ '/personas/' | url }}">Meet them</a>
+        <a href="{{ '/personas/drifter/' | url }}">The Drifter</a>
+        <a href="{{ '/personas/eris/' | url }}">Eris Morn</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="category">
+    <span class="category-index" aria-hidden="true">03</span>
+    <div>
+      <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" data-icon-placeholder="true">
+        <path d="M9 3v6M15 3v6M6 9h12v3a6 6 0 0 1-12 0z"/>
+        <path d="M12 18v3"/>
+      </svg>
+      <h2>Set up a character</h2>
+      <p>
+        Run one character on its own, or bring the whole crew into an AI app such
+        as OpenCode or OpenClaw. They share the library; their private memories
+        stay separate.
+      </p>
+      <div class="category-links">
+        <a href="{{ '/personas/install/' | url }}">Install a character</a>
+        <a href="{{ '/personas/platforms/' | url }}">Use another app</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="category">
+    <span class="category-index" aria-hidden="true">04</span>
+    <div>
+      <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" data-icon-placeholder="true">
+        <path d="M14.5 6.5a4 4 0 0 0-5 5L3 18l3 3 6.5-6.5a4 4 0 0 0 5-5l-2.5 2.5-2-2z"/>
+      </svg>
+      <h2>If something goes wrong</h2>
+      <p>
+        A missing library file, an AI connection that will not appear, a
+        character that will not show up, or a quote that keeps failing. Start with
+        the symptom and work back to the cause.
+      </p>
+      <div class="category-links">
+        <a href="{{ '/troubleshooting/' | url }}">Fix a problem</a>
+      </div>
+    </div>
+  </article>
+</section>
